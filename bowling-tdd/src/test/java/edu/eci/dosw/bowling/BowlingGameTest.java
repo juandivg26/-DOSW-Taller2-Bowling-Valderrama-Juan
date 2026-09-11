@@ -25,4 +25,13 @@ class BowlingGameTest {
 
         assertThrows(IllegalArgumentException.class, () -> game.roll(-1));
     }
+
+    @Test
+    @DisplayName("A3: roll(11) lanza IllegalArgumentException")
+    void rollMoreThanTenPins_throwsException() {
+        BowlingGame game = new BowlingGame();
+
+        assertThrows(IllegalArgumentException.class, () -> game.roll(11));
+    }
+    
 }
