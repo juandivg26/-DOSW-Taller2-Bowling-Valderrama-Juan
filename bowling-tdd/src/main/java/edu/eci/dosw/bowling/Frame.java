@@ -26,10 +26,13 @@ public class Frame {
     }
 
     public FrameType getType() {
-        List<Integer> currentRolls = getRolls();
-        if (!currentRolls.isEmpty() && currentRolls.get(0) == 10) {
-            return FrameType.STRIKE;
-        }
-        return FrameType.NORMAL;
+    List<Integer> currentRolls = getRolls();
+    if (!currentRolls.isEmpty() && currentRolls.get(0) == 10) {
+        return FrameType.STRIKE;
     }
+    if (currentRolls.size() == 2 && currentRolls.get(0) + currentRolls.get(1) == 10) {
+        return FrameType.SPARE;
+    }
+    return FrameType.NORMAL;
+}
 }
