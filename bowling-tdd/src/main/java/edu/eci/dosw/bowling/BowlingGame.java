@@ -38,7 +38,9 @@ public class BowlingGame {
 
         current.addRoll(pins);
 
-        if (current.getRolls().size() == 2 && frames.size() < 10) {
+        boolean frameComplete = current.getRolls().size() == 2
+            || current.getType() == FrameType.STRIKE;
+        if (frameComplete && frames.size() < 10) {
             frames.add(new Frame(frames.size() + 1));
         }
     }
@@ -51,7 +53,11 @@ public class BowlingGame {
 
     /** true cuando los 10 frames han sido completados. */
     public boolean isComplete() {
-        return frames.size() == 10 && frames.get(9).getRolls().size() == 2;
+        if (frames.size() < 10) {
+            return false;
+        }
+        Frame last = frames.get(9);
+        return last.getRolls().size() == 2 || last.getType() == FrameType.STRIKE;
     }
 
     public List<Frame> getFrames() { return List.copyOf(frames); }

@@ -26,6 +26,10 @@ public class Frame {
     }
 
     public FrameType getType() {
-    return FrameType.NORMAL; // TODO: implementar con TDD
+        List<Integer> currentRolls = getRolls();
+        if (!currentRolls.isEmpty() && currentRolls.get(0) == 10) {
+            return FrameType.STRIKE;
+        }
+        return FrameType.NORMAL;
     }
 }
