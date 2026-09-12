@@ -20,21 +20,28 @@ public class BowlingGame {
     /** Registra pinos derribados. Lanza IllegalArgumentException si pines < 0 o > 10.
      * Lanza IllegalStateException si el juego ya termino. */
     public void roll(int pins) {
-    if (pins < 0 || pins > 10) {
-        throw new IllegalArgumentException("El numero de pinos debe estar entre 0 y 10: " + pins);
-    }
-    if (frames.isEmpty()) {
-        frames.add(new Frame(1));
-    }
+        if (isComplete()) {
+            throw new IllegalStateException("El juego ya esta completo, no se pueden registrar mas tiros");
+        }
+        if (pins < 0 || pins > 10) {
+            throw new IllegalArgumentException("El numero de pinos debe estar entre 0 y 10: " + pins);
+        }
+        if (frames.isEmpty()) {
+            frames.add(new Frame(1));
+        }
 
-    Frame current = frames.get(frames.size() - 1);
-    List<Integer> currentRolls = current.getRolls();
-    if (currentRolls.size() == 1 && currentRolls.get(0) + pins > 10) {
-        throw new IllegalArgumentException("La suma de los dos tiros del frame no puede superar 10 pinos");
-    }
+        Frame current = frames.get(frames.size() - 1);
+        List<Integer> currentRolls = current.getRolls();
+        if (currentRolls.size() == 1 && currentRolls.get(0) + pins > 10) {
+            throw new IllegalArgumentException("La suma de los dos tiros del frame no puede superar 10 pinos");
+        }
 
-    current.addRoll(pins);
-}
+        current.addRoll(pins);
+
+        if (current.getRolls().size() == 2 && frames.size() < 10) {
+            frames.add(new Frame(frames.size() + 1));
+        }
+    }
 
     /** Puntaje total. Lanza IllegalStateException si el juego no esta completo. */
     public int score() {
@@ -44,8 +51,7 @@ public class BowlingGame {
 
     /** true cuando los 10 frames han sido completados. */
     public boolean isComplete() {
-        // TODO: implementar con TDD
-        return false;
+        return frames.size() == 10 && frames.get(9).getRolls().size() == 2;
     }
 
     public List<Frame> getFrames() { return List.copyOf(frames); }
