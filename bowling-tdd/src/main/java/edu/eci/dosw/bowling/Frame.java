@@ -26,13 +26,36 @@ public class Frame {
     }
 
     public FrameType getType() {
-    List<Integer> currentRolls = getRolls();
-    if (!currentRolls.isEmpty() && currentRolls.get(0) == 10) {
-        return FrameType.STRIKE;
+        if (frameNumber == 10) {
+            return FrameType.TENTH;
+        }
+        if (!rolls.isEmpty() && rolls.get(0) == 10) {
+            return FrameType.STRIKE;
+        }
+        if (rolls.size() == 2 && rolls.get(0) + rolls.get(1) == 10) {
+            return FrameType.SPARE;
+        }
+        return FrameType.NORMAL;
     }
-    if (currentRolls.size() == 2 && currentRolls.get(0) + currentRolls.get(1) == 10) {
-        return FrameType.SPARE;
+
+    /** true cuando este frame ya no puede recibir mas tiros. */
+    public boolean isComplete() {
+        if (frameNumber < 10) {
+            return rolls.size() == 2 || (!rolls.isEmpty() && rolls.get(0) == 10);
+        }
+        return isTenthFrameComplete();
     }
-    return FrameType.NORMAL;
-}
+
+    private boolean isTenthFrameComplete() {
+        if (rolls.size() < 2) {
+            return false;
+        }
+        int first = rolls.get(0);
+        int second = rolls.get(1);
+        boolean earnedThirdRoll = first == 10 || first + second == 10;
+        if (earnedThirdRoll) {
+            return rolls.size() == 3;
+        }
+        return true;
+    }
 }
