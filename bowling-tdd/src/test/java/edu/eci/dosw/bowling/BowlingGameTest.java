@@ -53,5 +53,15 @@ class BowlingGameTest {
 
         assertThrows(IllegalStateException.class, () -> game.roll(0));
     }
+
+    @Test
+    @DisplayName("A6: roll(10) detecta strike y avanza directamente al siguiente frame")
+    void rollTen_marksStrikeAndAdvancesFrame() {
+        BowlingGame game = new BowlingGame();
+        game.roll(10);
+
+        assertEquals(FrameType.STRIKE, game.getFrames().get(0).getType());
+        assertEquals(2, game.getFrames().size());
+    }
     
 }

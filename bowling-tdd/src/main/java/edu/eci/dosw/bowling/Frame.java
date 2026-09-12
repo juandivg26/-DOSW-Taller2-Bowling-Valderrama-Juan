@@ -24,4 +24,8 @@ public class Frame {
     public int getFrameNumber() {
         return frameNumber;
     }
+
+    public FrameType getType() {
+    return FrameType.NORMAL; // TODO: implementar con TDD
+    }
 }
