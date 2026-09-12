@@ -26,7 +26,14 @@ public class BowlingGame {
     if (frames.isEmpty()) {
         frames.add(new Frame(1));
     }
-    frames.get(frames.size() - 1).addRoll(pins);
+
+    Frame current = frames.get(frames.size() - 1);
+    List<Integer> currentRolls = current.getRolls();
+    if (currentRolls.size() == 1 && currentRolls.get(0) + pins > 10) {
+        throw new IllegalArgumentException("La suma de los dos tiros del frame no puede superar 10 pinos");
+    }
+
+    current.addRoll(pins);
 }
 
     /** Puntaje total. Lanza IllegalStateException si el juego no esta completo. */
