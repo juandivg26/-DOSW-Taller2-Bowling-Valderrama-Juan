@@ -12,6 +12,12 @@ public final class BowlingScorer {
     }
 
     public static int calculate(List<Frame> frames) {
-        return -1; // TODO: implementar con TDD
+        int total = 0;
+        for (Frame frame : frames) {
+            for (int pins : frame.getRolls()) {
+                total += pins;
+            }
+        }
+        return total;
     }
 }
