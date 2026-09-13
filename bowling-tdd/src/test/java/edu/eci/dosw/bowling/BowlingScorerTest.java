@@ -1,9 +1,8 @@
 package edu.eci.dosw.bowling;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class BowlingScorerTest {
 
@@ -17,4 +16,16 @@ class BowlingScorerTest {
 
         assertEquals(0, BowlingScorer.calculate(game.getFrames()));
     }
+
+    @Test
+    @DisplayName("B2: juego sin strikes ni spares -> suma directa de todos los pinos")
+    void gameWithoutStrikesOrSpares_scoresDirectSum() {
+        BowlingGame game = new BowlingGame();
+        for (int i = 0; i < 20; i++) {
+            game.roll(3);
+        }
+
+        assertEquals(60, BowlingScorer.calculate(game.getFrames()));
+    }
+    
 }
