@@ -1,6 +1,7 @@
 package edu.eci.dosw.bowling;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.DisplayName;
@@ -89,6 +90,74 @@ class BowlingGameTest {
         assertTrue(game.isComplete());
         assertEquals(3, game.getFrames().get(9).getRolls().size());
     }
-    
-    
+
+    @Test
+    @DisplayName("C1: isComplete() al inicio del juego es false")
+    void isComplete_atStart_isFalse() {
+        BowlingGame game = new BowlingGame();
+
+        assertFalse(game.isComplete());
+    }
+
+    @Test
+    @DisplayName("C2: isComplete() despues de 9 frames completos es false")
+    void isComplete_afterNineFrames_isFalse() {
+        BowlingGame game = new BowlingGame();
+        for (int i = 0; i < 18; i++) {
+            game.roll(0);
+        }
+
+        assertFalse(game.isComplete());
+    }
+
+    @Test
+    @DisplayName("C3: 10 frames normales completos (sin strike/spare en frame 10) es true")
+    void isComplete_tenNormalFrames_isTrue() {
+        BowlingGame game = new BowlingGame();
+        for (int i = 0; i < 20; i++) {
+            game.roll(0);
+        }
+
+        assertTrue(game.isComplete());
+    }
+
+    @Test
+    @DisplayName("C4: spare en frame 10 + tiro bonus ejecutado es true")
+    void isComplete_tenthFrameSpareWithBonus_isTrue() {
+        BowlingGame game = new BowlingGame();
+        for (int i = 0; i < 18; i++) {
+            game.roll(0);
+        }
+        game.roll(5);
+        game.roll(5);
+        game.roll(7);
+
+        assertTrue(game.isComplete());
+    }
+
+    @Test
+    @DisplayName("C5: strike en frame 10 + 2 tiros bonus ejecutados es true")
+    void isComplete_tenthFrameStrikeWithTwoBonusRolls_isTrue() {
+        BowlingGame game = new BowlingGame();
+        for (int i = 0; i < 18; i++) {
+            game.roll(0);
+        }
+        game.roll(10);
+        game.roll(3);
+        game.roll(4);
+
+        assertTrue(game.isComplete());
+    }
+
+    @Test
+    @DisplayName("C6: juego perfecto - tras el 12vo strike isComplete() es true")
+    void isComplete_afterPerfectGame_isTrue() {
+        BowlingGame game = new BowlingGame();
+        for (int i = 0; i < 12; i++) {
+            game.roll(10);
+        }
+
+        assertTrue(game.isComplete());
+    }
+
 }
