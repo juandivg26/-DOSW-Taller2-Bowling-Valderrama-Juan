@@ -85,4 +85,15 @@ class BowlingScorerTest {
         assertEquals(150, BowlingScorer.calculate(game.getFrames()));
     }
 
+    @Test
+    @DisplayName("B7: juego perfecto (12 strikes) -> score() == 300")
+    void perfectGame_scores300() {
+        BowlingGame game = new BowlingGame();
+        for (int i = 0; i < 12; i++) {
+            game.roll(10);
+        }
+
+        assertEquals(300, game.score());
+    }
+
 }
