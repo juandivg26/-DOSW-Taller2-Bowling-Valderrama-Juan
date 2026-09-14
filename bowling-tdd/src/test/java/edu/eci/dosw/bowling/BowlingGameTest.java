@@ -149,4 +149,15 @@ class BowlingGameTest {
         assertTrue(game.isComplete());
     }
 
+    @Test
+    @DisplayName("C6: juego perfecto - tras el 12vo strike isComplete() es true")
+    void isComplete_afterPerfectGame_isTrue() {
+        BowlingGame game = new BowlingGame();
+        for (int i = 0; i < 12; i++) {
+            game.roll(10);
+        }
+
+        assertTrue(game.isComplete());
+    }
+
 }
