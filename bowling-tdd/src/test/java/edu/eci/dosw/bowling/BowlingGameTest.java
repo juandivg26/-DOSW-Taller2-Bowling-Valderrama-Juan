@@ -98,5 +98,16 @@ class BowlingGameTest {
 
         assertFalse(game.isComplete());
     }
-    
+
+    @Test
+    @DisplayName("C2: isComplete() despues de 9 frames completos es false")
+    void isComplete_afterNineFrames_isFalse() {
+        BowlingGame game = new BowlingGame();
+        for (int i = 0; i < 18; i++) {
+            game.roll(0);
+        }
+
+        assertFalse(game.isComplete());
+    }
+
 }
