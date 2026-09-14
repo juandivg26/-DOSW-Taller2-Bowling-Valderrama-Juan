@@ -110,4 +110,15 @@ class BowlingGameTest {
         assertFalse(game.isComplete());
     }
 
+    @Test
+    @DisplayName("C3: 10 frames normales completos (sin strike/spare en frame 10) es true")
+    void isComplete_tenNormalFrames_isTrue() {
+        BowlingGame game = new BowlingGame();
+        for (int i = 0; i < 20; i++) {
+            game.roll(0);
+        }
+
+        assertTrue(game.isComplete());
+    }
+
 }
